@@ -19,7 +19,7 @@ pipeline{
                 
         stage('Build Docker Image'){
             steps{
-                sh 'cp /var/lib/jenkins/workspace/CICDPipeline_Project/target/addressbook.war .'
+                sh 'cp /var/lib/jenkins/workspace/CICDPipeline_FinalProject/target/addressbook.war .'
                 sh 'docker build -t myaddressbook .'
             }
         }
