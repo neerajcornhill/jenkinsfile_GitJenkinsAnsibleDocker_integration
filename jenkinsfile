@@ -19,15 +19,23 @@ pipeline{
                 
         stage('Build Docker Image'){
             steps{
-                sh 'cp /var/lib/jenkins/workspace/CICDPipeline_DeployApp_Container/target/addressbook.war .'
+                sh 'cp /var/lib/jenkins/workspace/CICDPipeline_Project/target/addressbook.war .'
                 sh 'docker build -t myaddressbook .'
+            }
+        }
+
+       stage('Push Image to Dockerhub'){
+            steps{
+                sh 'docker tag myimagejenkins neerajc/projectaddrbookimage:$BUILD_NUMBER'
+                sh 'docker login --username neerajc --password dckr_pat_J-0GaGAv_Ji37D_9T9vWPqEA5RU'
+                sh 'docker push neerajc/projectaddrbookimage:$BUILD_NUMBER'
             }
         }
         
       
         stage('Deploy Container'){
             steps{
-                sh 'docker run -d -P myaddressbook'
+                sh 'docker run -d -P projectaddrbookimage'
             }
         }
     }
