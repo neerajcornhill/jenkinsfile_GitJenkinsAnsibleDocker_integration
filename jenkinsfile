@@ -1,0 +1,34 @@
+pipeline{
+    tools{
+        maven 'mymaven'
+    }
+    agent any
+    stages{
+
+        stage('Clone the repository'){
+            steps{
+                git 'https://github.com/neerajcornhill/DevOpsCodeDemo.git'
+            }
+        }
+
+        stage('Test,Build and Package'){
+            steps{
+                sh 'mvn clean install test package'
+            }
+        }
+                
+        stage('Build Docker Image'){
+            steps{
+                sh 'cp /var/lib/jenkins/workspace/CICDPipeline_DeployApp_Container/target/addressbook.war .'
+                sh 'docker build -t myaddressbook .'
+            }
+        }
+        
+      
+        stage('Deploy Container'){
+            steps{
+                sh 'docker run -d -P myaddressbook'
+            }
+        }
+    }
+}
