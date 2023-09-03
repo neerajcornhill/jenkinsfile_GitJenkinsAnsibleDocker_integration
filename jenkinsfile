@@ -35,7 +35,7 @@ pipeline{
       
         stage('Deploy Container'){
             steps{
-                sh 'docker run -d -P neerajc/projectaddrbookimage'
+                sh 'docker run -d -P neerajc/projectaddrbookimage:$BUILD_NUMBER'
             }
         }
     }
