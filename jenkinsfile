@@ -26,7 +26,7 @@ pipeline{
 
        stage('Push Image to Dockerhub'){
             steps{
-                sh 'docker tag myimagejenkins neerajc/projectaddrbookimage:$BUILD_NUMBER'
+                sh 'docker tag projectaddrbookimage:$BUILD_NUMBER neerajc/projectaddrbookimage:$BUILD_NUMBER'
                 sh 'docker login --username neerajc --password dckr_pat_J-0GaGAv_Ji37D_9T9vWPqEA5RU'
                 sh 'docker push neerajc/projectaddrbookimage:$BUILD_NUMBER'
             }
